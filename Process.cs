@@ -1,13 +1,42 @@
 namespace FlexibleProcess;
 
+/// <summary>
+/// Represents a generic process that can manage multiple stages and transitions.
+/// The process is associated with specific data of type T.
+/// </summary>
+/// <typeparam name="T">The type of data associated with the process</typeparam>
 public class Process<T>
 {
+    /// <summary>
+    /// List of all stages in the process
+    /// </summary>
     public List<Stage> Stages { get; private set; }
+
+    /// <summary>
+    /// The current stage of the process
+    /// </summary>
     public Stage CurrentStage { get; private set; }
+
+    /// <summary>
+    /// History of all transitions and events in the process
+    /// </summary>
     public List<string> History { get; private set; }
+
+    /// <summary>
+    /// List of all possible transitions between stages
+    /// </summary>
     private List<Transition<T>> _transitions;
+
+    /// <summary>
+    /// Data associated with the process
+    /// </summary>
     private T _processData;
 
+    /// <summary>
+    /// Initializes a new instance of the Process class
+    /// </summary>
+    /// <param name="initialStage">The starting stage of the process</param>
+    /// <param name="processData">The data associated with the process</param>
     public Process(Stage initialStage, T processData)
     {
         Stages = new List<Stage> { initialStage };
@@ -17,6 +46,10 @@ public class Process<T>
         _processData = processData;
     }
 
+    /// <summary>
+    /// Adds a new stage to the process
+    /// </summary>
+    /// <param name="stage">The stage to add</param>
     public void AddStage(Stage stage)
     {
         if (Stages.Exists(s => s.Name == stage.Name))
@@ -30,14 +63,20 @@ public class Process<T>
         }
     }
 
-    // Добавление перехода
+    /// <summary>
+    /// Adds a new transition between stages
+    /// </summary>
+    /// <param name="transition">The transition to add</param>
     public void AddTransition(Transition<T> transition)
     {
         _transitions.Add(transition);
         Console.WriteLine($"Добавлен переход: {transition}");
     }
 
-    // Обработка события и выполнение перехода
+    /// <summary>
+    /// Handles an event and performs the corresponding transition if valid
+    /// </summary>
+    /// <param name="eventName">The event to handle</param>
     public void HandleEvent(Event eventName)
     {
         var transition = _transitions.Find(t => t.FromStage == CurrentStage && t.TriggerEvent == eventName);
@@ -56,7 +95,9 @@ public class Process<T>
         }
     }
 
-    // Вывод истории переходов
+    /// <summary>
+    /// Prints the history of all transitions in the process
+    /// </summary>
     public void PrintHistory()
     {
         Console.WriteLine("История переходов:");
