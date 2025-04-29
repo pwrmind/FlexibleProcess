@@ -22,6 +22,56 @@ A flexible process management framework for C# that allows you to model and mana
 - `TransitionHandler<T>`: Handles transition logic
 - `TransitionGuard<T>`: Validates if a transition can occur
 
+## Process Flow
+
+The following sequence diagram illustrates the typical flow of operations in the FlexibleProcess framework:
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Process
+    participant Stage
+    participant Transition
+    participant Guard
+    participant Handler
+    participant Event
+    participant Emitter
+
+    Client->>Process: Create Process(initialStage, processData)
+    Process->>Stage: Initialize CurrentStage
+    Process->>Process: Initialize History
+
+    Client->>Process: AddStage(newStage)
+    Process->>Process: Add to Stages list
+
+    Client->>Process: AddTransition(transition)
+    Process->>Process: Add to Transitions list
+
+    Client->>Process: HandleEvent(event)
+    Process->>Transition: Find matching transition
+    Transition->>Guard: Validate(processData)
+    alt Validation Successful
+        Guard-->>Transition: true
+        Transition->>Handler: Execute(fromStage, toStage, processData)
+        Handler-->>Transition: Complete
+        Transition->>Process: Update CurrentStage
+        Process->>Process: Add to History
+    else Validation Failed
+        Guard-->>Transition: false
+        Transition-->>Process: Transition rejected
+    end
+```
+
+The diagram shows:
+1. Process initialization with an initial stage and process data
+2. Adding new stages to the process
+3. Adding transitions between stages
+4. Event handling flow:
+   - Finding matching transition
+   - Validating transition with guard
+   - Executing transition handler
+   - Updating process state and history
+
 ## Usage Examples
 
 ### Basic Process Creation
