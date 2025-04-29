@@ -21,11 +21,12 @@ FlexibleProcess/
 │       │   ├── TransitionHandler.cs # Base transition handler
 │       │   └── TransitionGuard.cs   # Base transition guard
 │       └── Examples/               # Example implementations
-│           ├── Package.cs          # Example process data
-│           ├── PackageTransitionGuard.cs
-│           ├── CustomTransitionHandler1.cs
-│           ├── CustomTransitionHandler2.cs
-│           └── Program.cs          # Example usage
+│           └── PackageProcess          # Example process data
+│               ├── Package.cs
+│               ├── PackageTransitionGuard.cs
+│               ├── CustomTransitionHandler1.cs
+│               ├── CustomTransitionHandler2.cs
+│               └── Program.cs          # Example usage
 ├── README.md
 └── LICENSE
 ```
