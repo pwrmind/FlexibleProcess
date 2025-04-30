@@ -2,7 +2,7 @@
 
 class Program
 {
-    static void Main(string[] args)
+    static void MainV1(string[] args)
     {
         // Создаем этапы
         Stage stage1 = new Stage("Этап 1");
