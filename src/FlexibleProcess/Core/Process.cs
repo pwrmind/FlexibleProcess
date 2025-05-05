@@ -8,6 +8,11 @@ namespace FlexibleProcess;
 public class Process<T>
 {
     /// <summary>
+    /// Id the process
+    /// </summary>
+    public Guid Id { get; private set; }
+
+    /// <summary>
     /// List of all stages in the process
     /// </summary>
     public List<Stage> Stages { get; private set; }
@@ -39,6 +44,7 @@ public class Process<T>
     /// <param name="processData">The data associated with the process</param>
     public Process(Stage initialStage, T processData)
     {
+        Id = Guid.NewGuid();
         Stages = new List<Stage> { initialStage };
         CurrentStage = initialStage;
         History = new List<string> { $"Начало процесса: {CurrentStage.Name}" };

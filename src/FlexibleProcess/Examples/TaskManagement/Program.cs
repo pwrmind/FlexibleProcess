@@ -2,7 +2,7 @@ namespace FlexibleProcess.Examples.TaskManagement;
 
 class Program
 {
-    static void Main(string[] args)
+    static void MainV2(string[] args)
     {
         // Create stages for individual tasks
         Stage taskIdle = new Stage("Idle");
