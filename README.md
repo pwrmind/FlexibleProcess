@@ -2,35 +2,6 @@
 
 A flexible process management framework for C# that allows you to model and manage complex business processes with multiple stages, transitions, and event handling.
 
-## Project Structure
-
-```
-FlexibleProcess/
-├── src/
-│   └── FlexibleProcess/
-│       ├── Core/                    # Core framework components
-│       │   ├── Initiators/         # Event emitter implementations
-│       │   │   ├── UserInitiator.cs
-│       │   │   ├── SystemInitiator.cs
-│       │   │   └── ExternalServiceInitiator.cs
-│       │   ├── Process.cs          # Main process container
-│       │   ├── Stage.cs            # Process stage representation
-│       │   ├── Transition.cs       # Stage transition logic
-│       │   ├── Event.cs            # Event representation
-│       │   ├── IEmitter.cs         # Event emitter interface
-│       │   ├── TransitionHandler.cs # Base transition handler
-│       │   └── TransitionGuard.cs   # Base transition guard
-│       └── Examples/               # Example implementations
-│           └── PackageProcess          # Example process data
-│               ├── Package.cs
-│               ├── PackageTransitionGuard.cs
-│               ├── CustomTransitionHandler1.cs
-│               ├── CustomTransitionHandler2.cs
-│               └── Program.cs          # Example usage
-├── README.md
-└── LICENSE
-```
-
 ## Features
 
 - Generic process management with type-safe data handling
