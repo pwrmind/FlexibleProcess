@@ -60,6 +60,7 @@ public class Process<T>
             if (Stages.Count == 0)
             {
                 CurrentStage = stage;
+                Console.WriteLine($"Этап '{stage.Name}' назначен текущим.");
             }
             
             Stages.Add(stage);

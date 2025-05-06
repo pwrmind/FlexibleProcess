@@ -7,8 +7,6 @@ class Program
         Stage turnedOn = new("On");
         Stage turnedOff = new("Off");
 
-        SystemInitiator system = new("SYS-001");
-
         var shipping = new Process<Shipping>(new Shipping(42, "#4321"));
         var shippingProcess = new Process<Process<Shipping>>(shipping);
 
@@ -28,6 +26,8 @@ class Program
         shippingProcess.AddTransition(toRunTransition);
 
         Console.WriteLine("Starting process demonstration...\n");
+
+        SystemInitiator system = new("SYS-001");
 
         shippingProcess.HandleEvent(new TurnOn(system));
         shippingProcess.HandleEvent(new TurnOff(system));

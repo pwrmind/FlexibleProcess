@@ -8,16 +8,12 @@ public class ProcessTransitionHandler : TransitionHandler<Process<Shipping>>
 
         switch (toStage.Name)
         {
-            case "Run":
+            case "On":
                 Console.WriteLine($"Starting work on process: #{process.Id}");
                 break;
 
-            case "Complete":
+            case "Off":
                 Console.WriteLine($"Completing task: #{process.Id}");
-                break;
-
-            case "Idle":
-                Console.WriteLine($"Task {process.Id} is now idle");
                 break;
         }
     }
