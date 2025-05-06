@@ -39,10 +39,10 @@ class Program
         var stateGuard = new PackageTransitionGuard();
 
         // Создаем переходы с обработчиками
-        Transition<Package> transition1 = new Transition<Package>(stage1, eventA, stage2, customHandler1, guard: stateGuard);
-        Transition<Package> transition2 = new Transition<Package>(stage1, eventB, stage3, customHandler2, guard: stateGuard);
-        Transition<Package> transition3 = new Transition<Package>(stage2, eventC, stage3, guard: stateGuard);
-        Transition<Package> transition4 = new Transition<Package>(stage3, eventD, stage1, guard: stateGuard);
+        Transition<Package> transition1 = new Transition<Package>(eventA.GetType(), stage1, stage2, customHandler1, guard: stateGuard);
+        Transition<Package> transition2 = new Transition<Package>(eventB.GetType(), stage1, stage3, customHandler2, guard: stateGuard);
+        Transition<Package> transition3 = new Transition<Package>(eventC.GetType(), stage2, stage3, guard: stateGuard);
+        Transition<Package> transition4 = new Transition<Package>(eventD.GetType(), stage3, stage1, guard: stateGuard);
 
         // Добавляем переходы в процесс
         process.AddTransition(transition1);

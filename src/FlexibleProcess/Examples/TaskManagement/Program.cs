@@ -72,13 +72,13 @@ class Program
         var taskHandler = new TaskTransitionHandler();
 
         // Add transitions for tasks
-        var task1StartTransition = new Transition<TaskData>(taskIdle, startTask, taskRun, taskHandler, taskGuard);
-        var task1CompleteTransition = new Transition<TaskData>(taskRun, completeTask, taskComplete, taskHandler, taskGuard);
-        var task1PauseTransition = new Transition<TaskData>(taskRun, pauseTask, taskIdle, taskHandler, taskGuard);
+        var task1StartTransition = new Transition<TaskData>(startTask.GetType(), taskIdle, taskRun, taskHandler, taskGuard);
+        var task1CompleteTransition = new Transition<TaskData>(completeTask.GetType(),taskRun, taskComplete, taskHandler, taskGuard);
+        var task1PauseTransition = new Transition<TaskData>(pauseTask.GetType(), taskRun, taskIdle, taskHandler, taskGuard);
 
-        var task2StartTransition = new Transition<TaskData>(taskIdle, startTask, taskRun, taskHandler, taskGuard);
-        var task2CompleteTransition = new Transition<TaskData>(taskRun, completeTask, taskComplete, taskHandler, taskGuard);
-        var task2PauseTransition = new Transition<TaskData>(taskRun, pauseTask, taskIdle, taskHandler, taskGuard);
+        var task2StartTransition = new Transition<TaskData>(startTask.GetType(), taskIdle, taskRun, taskHandler, taskGuard);
+        var task2CompleteTransition = new Transition<TaskData>(completeTask.GetType(), taskRun, taskComplete, taskHandler, taskGuard);
+        var task2PauseTransition = new Transition<TaskData>(pauseTask.GetType(), taskRun, taskIdle, taskHandler, taskGuard);
 
         // Add transitions to task processes
         taskProcess1.AddTransition(task1StartTransition);
@@ -90,9 +90,9 @@ class Program
         taskProcess2.AddTransition(task2PauseTransition);
 
         // Add transitions for main process
-        var listPauseTransition = new Transition<TaskListData>(listActive, pauseList, listPaused);
-        var listResumeTransition = new Transition<TaskListData>(listPaused, startList, listActive);
-        var listCompleteTransition = new Transition<TaskListData>(listActive, completeList, listCompleted);
+        var listPauseTransition = new Transition<TaskListData>(pauseList.GetType(), listActive, listPaused);
+        var listResumeTransition = new Transition<TaskListData>(startList.GetType(), listPaused, listActive);
+        var listCompleteTransition = new Transition<TaskListData>(completeList.GetType(), listActive, listCompleted);
 
         mainProcess.AddTransition(listPauseTransition);
         mainProcess.AddTransition(listResumeTransition);

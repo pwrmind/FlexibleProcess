@@ -76,7 +76,7 @@ public class ProcessBuilder<T>
         }
 
         var transitionEvent = new Event(eventName, emitter);
-        var transition = new Transition<T>(fromStage, transitionEvent, toStage, handler, guard);
+        var transition = new Transition<T>(transitionEvent.GetType(), fromStage, toStage, handler, guard);
         _transitions.Add(transition);
 
         return this;

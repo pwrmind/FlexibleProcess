@@ -82,22 +82,22 @@ public class Process<T>
     /// <summary>
     /// Handles an event and performs the corresponding transition if valid
     /// </summary>
-    /// <param name="eventName">The event to handle</param>
-    public void HandleEvent(Event eventName)
+    /// <param name="eventInstance">The event to handle</param>
+    public void HandleEvent(Event eventInstance)
     {
-        var transition = _transitions.Find(t => t.FromStage == CurrentStage && t.TriggerEvent == eventName);
+        var transition = _transitions.Find(t => t.FromStage == CurrentStage && t.TriggerEventType == eventInstance.GetType() );
 
         if (transition != null)
         {
             // Можно добавить дополнительные обработчики до и после перехода
             transition.ExecuteHandler(_processData); // Вызов обработчика перехода с данными процесса
             CurrentStage = transition.ToStage;
-            History.Add($"Переход на этап: {CurrentStage.Name} (по событию: {eventName}, Инициатор: {eventName.Emitter.Type} (ID: {eventName.Emitter.Id}))");
-            Console.WriteLine($"Переход на этап: {CurrentStage} (по событию: {eventName}, Инициатор: {eventName.Emitter.Type} (ID: {eventName.Emitter.Id}))");
+            History.Add($"Переход на этап: {CurrentStage.Name} (по событию: {eventInstance}, Инициатор: {eventInstance.Emitter.Type} (ID: {eventInstance.Emitter.Id}))");
+            Console.WriteLine($"Переход на этап: {CurrentStage} (по событию: {eventInstance}, Инициатор: {eventInstance.Emitter.Type} (ID: {eventInstance.Emitter.Id}))");
         }
         else
         {
-            Console.WriteLine($"Невозможно обработать событие: {eventName} на этапе: {CurrentStage.Name}");
+            Console.WriteLine($"Невозможно обработать событие: {eventInstance} на этапе: {CurrentStage.Name}");
         }
     }
 

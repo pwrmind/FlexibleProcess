@@ -15,7 +15,7 @@ public class Transition<T>
     /// <summary>
     /// The event that triggers this transition
     /// </summary>
-    public Event TriggerEvent { get; private set; }
+    public Type TriggerEventType { get; }
 
     /// <summary>
     /// The target stage of the transition
@@ -35,15 +35,15 @@ public class Transition<T>
     /// <summary>
     /// Initializes a new instance of the Transition class
     /// </summary>
+    /// <param name="triggerEventType">The event that triggers the transition</param>
     /// <param name="fromStage">The source stage</param>
-    /// <param name="triggerEvent">The event that triggers the transition</param>
     /// <param name="toStage">The target stage</param>
     /// <param name="handler">Optional custom handler for the transition</param>
     /// <param name="guard">Optional custom guard for the transition</param>
-    public Transition(Stage fromStage, Event triggerEvent, Stage toStage, TransitionHandler<T> handler = null, TransitionGuard<T> guard = null)
+    public Transition(Type triggerEventType, Stage fromStage,  Stage toStage, TransitionHandler<T> handler = null, TransitionGuard<T> guard = null)
     {
         FromStage = fromStage;
-        TriggerEvent = triggerEvent;
+        TriggerEventType = triggerEventType;
         ToStage = toStage;
         Handler = handler ?? new TransitionHandler<T>(); // Default handler if none provided
         Guard = guard ?? new TransitionGuard<T>(); // Default guard if none provided
@@ -57,7 +57,7 @@ public class Transition<T>
     {
         if (!Guard.Validate(processData))
         {
-            Console.WriteLine($"Переход: {FromStage.Name} -> {ToStage.Name} (по событию: {TriggerEvent}) невозможен: текущее состояние объекта - {processData}.");
+            Console.WriteLine($"Переход: {FromStage.Name} -> {ToStage.Name} (по событию: {TriggerEventType}) невозможен: текущее состояние объекта - {processData}.");
             return;
         }
 
@@ -70,6 +70,6 @@ public class Transition<T>
     /// <returns>A string describing the transition</returns>
     public override string ToString()
     {
-        return $"Переход: {FromStage.Name} -> {ToStage.Name} (по событию: {TriggerEvent})";
+        return $"Переход: {FromStage.Name} -> {ToStage.Name} (по событию: {TriggerEventType})";
     }
 }

@@ -26,9 +26,9 @@ class Program
         var processHandler = new ProcessTransitionHandler();
 
         // Add transitions for tasks
-        var toIdleTransition = new Transition<Process<Shipping>>(processRun, toIdle, processIdle, processHandler, processGuard);
-        var toRunTransition = new Transition<Process<Shipping>>(processIdle, toRun, processRun, processHandler, processGuard);
-        var toCompleteTransition = new Transition<Process<Shipping>>(processRun, toComplete, processComplete, processHandler, processGuard);
+        var toIdleTransition = new Transition<Process<Shipping>>(toIdle.GetType(), processRun, processIdle, processHandler, processGuard);
+        var toRunTransition = new Transition<Process<Shipping>>(toRun.GetType(), processIdle, processRun, processHandler, processGuard);
+        var toCompleteTransition = new Transition<Process<Shipping>>(toComplete.GetType(), processRun, processComplete, processHandler, processGuard);
 
         // Add transitions to process
         shippingProcess.AddTransition(toIdleTransition);
