@@ -83,7 +83,7 @@ public class Process<T>
     /// Handles an event and performs the corresponding transition if valid
     /// </summary>
     /// <param name="eventInstance">The event to handle</param>
-    public void HandleEvent(Event eventInstance)
+    public void HandleEvent<TEmitter>(Event<TEmitter> eventInstance)
     {
         var transition = _transitions.Find(t => t.FromStage == CurrentStage && t.TriggerEventType == eventInstance.GetType() );
 
@@ -92,8 +92,9 @@ public class Process<T>
             // Можно добавить дополнительные обработчики до и после перехода
             transition.ExecuteHandler(_processData); // Вызов обработчика перехода с данными процесса
             CurrentStage = transition.ToStage;
-            History.Add($"Переход на этап: {CurrentStage.Name} (по событию: {eventInstance}, Инициатор: {eventInstance.Emitter.Type} (ID: {eventInstance.Emitter.Id}))");
-            Console.WriteLine($"Переход на этап: {CurrentStage} (по событию: {eventInstance}, Инициатор: {eventInstance.Emitter.Type} (ID: {eventInstance.Emitter.Id}))");
+            var message = $"\tПереход на этап: {CurrentStage.Name}\n\tПо событию: {eventInstance.GetType()}\n\tИнициатор: {eventInstance.Emitter}";
+            History.Add(message);
+            Console.WriteLine(message);
         }
         else
         {

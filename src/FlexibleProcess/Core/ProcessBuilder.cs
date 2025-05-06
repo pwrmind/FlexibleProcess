@@ -62,7 +62,7 @@ public class ProcessBuilder<T>
     public ProcessBuilder<T> AddTransition(
         string fromStageName,
         string toStageName,
-        string eventName,
+        Type eventType,
         IEmitter emitter,
         TransitionHandler<T> handler = null,
         TransitionGuard<T> guard = null)
@@ -75,8 +75,7 @@ public class ProcessBuilder<T>
             throw new ArgumentException("Source or target stage not found");
         }
 
-        var transitionEvent = new Event(eventName, emitter);
-        var transition = new Transition<T>(transitionEvent.GetType(), fromStage, toStage, handler, guard);
+        var transition = new Transition<T>(eventType.GetType(), fromStage, toStage, handler, guard);
         _transitions.Add(transition);
 
         return this;

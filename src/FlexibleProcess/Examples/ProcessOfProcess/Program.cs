@@ -1,19 +1,18 @@
 namespace FlexibleProcess.Examples.ProcessOfProcess;
-
 class Program
 {
     static void Main(string[] args)
     {
         // Create stages for individual tasks
-        Stage processIdle = new Stage("Idle");
-        Stage processRun = new Stage("Run");
-        Stage processComplete = new Stage("Complete");
+        Stage processIdle = new("Idle");
+        Stage processRun = new("Run");
+        Stage processComplete = new("Complete");
 
-        IEmitter system = new SystemInitiator("SYS-001");
+        SystemInitiator system = new("SYS-001");
 
-        Event toIdle = new Event("IdleProcess", system);
-        Event toRun = new Event("RunProcess", system);
-        Event toComplete = new Event("CompleteProcess", system);
+        ShitHappenedEvent toIdle = new(system);
+        FunHappenedEvent toRun = new(system);
+        LoveHappenedEvent toComplete = new(system);
 
         var shipping = new Process<Shipping>(processIdle, new Shipping(42, "#4321"));
         var shippingProcess = new Process<Process<Shipping>>(processIdle, shipping);
@@ -26,9 +25,9 @@ class Program
         var processHandler = new ProcessTransitionHandler();
 
         // Add transitions for tasks
-        var toIdleTransition = new Transition<Process<Shipping>>(toIdle.GetType(), processRun, processIdle, processHandler, processGuard);
-        var toRunTransition = new Transition<Process<Shipping>>(toRun.GetType(), processIdle, processRun, processHandler, processGuard);
-        var toCompleteTransition = new Transition<Process<Shipping>>(toComplete.GetType(), processRun, processComplete, processHandler, processGuard);
+        var toIdleTransition = new Transition<Process<Shipping>>(typeof(ShitHappenedEvent), processRun, processIdle, processHandler, processGuard);
+        var toRunTransition = new Transition<Process<Shipping>>(typeof(FunHappenedEvent), processIdle, processRun, processHandler, processGuard);
+        var toCompleteTransition = new Transition<Process<Shipping>>(typeof(LoveHappenedEvent), processRun, processComplete, processHandler, processGuard);
 
         // Add transitions to process
         shippingProcess.AddTransition(toIdleTransition);
@@ -36,8 +35,7 @@ class Program
         shippingProcess.AddTransition(toCompleteTransition);
 
         Console.WriteLine("Starting process demonstration...\n");
-        Console.WriteLine("Starting process...");
-        
+
         shippingProcess.HandleEvent(toRun);
         shippingProcess.HandleEvent(toIdle);
         shippingProcess.HandleEvent(toRun);
