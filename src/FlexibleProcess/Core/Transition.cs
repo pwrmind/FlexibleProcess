@@ -8,6 +8,11 @@ namespace FlexibleProcess;
 public class Transition<T>
 {
     /// <summary>
+    /// Id of the transition
+    /// </summary>
+    public Guid Id { get; private set; }
+
+    /// <summary>
     /// The source stage of the transition
     /// </summary>
     public Stage FromStage { get; private set; }
@@ -42,6 +47,7 @@ public class Transition<T>
     /// <param name="guard">Optional custom guard for the transition</param>
     public Transition(Type triggerEventType, Stage fromStage,  Stage toStage, TransitionHandler<T> handler = null, TransitionGuard<T> guard = null)
     {
+        Id = Guid.NewGuid();
         FromStage = fromStage;
         TriggerEventType = triggerEventType;
         ToStage = toStage;
