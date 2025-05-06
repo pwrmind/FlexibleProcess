@@ -4,7 +4,7 @@ namespace FlexibleProcess;
 /// Represents the system as an event emitter in the process.
 /// Used for automated or system-generated events.
 /// </summary>
-public class SystemInitiator : IEmitter
+public class SystemInitiator
 {
     /// <summary>
     /// Gets the type of the emitter, which is "System" for this class

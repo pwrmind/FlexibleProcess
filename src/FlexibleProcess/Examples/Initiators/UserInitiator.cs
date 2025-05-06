@@ -3,7 +3,7 @@ namespace FlexibleProcess;
 /// <summary>
 /// Represents a user as an event emitter in the process.
 /// </summary>
-public class UserInitiator : IEmitter
+public class UserInitiator
 {
     /// <summary>
     /// Gets the type of the emitter, which is "User" for this class

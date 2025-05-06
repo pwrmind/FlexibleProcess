@@ -4,7 +4,7 @@ namespace FlexibleProcess;
 /// Represents an external service as an event emitter in the process.
 /// Used for events triggered by external systems or services.
 /// </summary>
-public class ExternalServiceInitiator : IEmitter
+public class ExternalServiceInitiator
 {
     /// <summary>
     /// Gets the type of the emitter, which is "ExternalService" for this class
