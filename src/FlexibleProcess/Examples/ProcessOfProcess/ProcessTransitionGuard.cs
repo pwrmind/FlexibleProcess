@@ -9,13 +9,7 @@ public class ProcessTransitionGuard : TransitionGuard<Process<Shipping>>
             Console.WriteLine("Process is null");
             return false;
         }
-
-        if (process.CurrentStage == null)
-        {
-            Console.WriteLine($"Invalid task ID: {process.CurrentStage}");
-            return false;
-        }
-
+        
         return true;
     }
 }

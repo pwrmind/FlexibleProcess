@@ -20,12 +20,7 @@ public class Process<T>
     /// <summary>
     /// The current stage of the process
     /// </summary>
-    public Stage CurrentStage { get; private set; }
-
-    /// <summary>
-    /// History of all transitions and events in the process
-    /// </summary>
-    public List<string> History { get; private set; }
+    public Stage? CurrentStage { get; private set; }
 
     /// <summary>
     /// List of all possible transitions between stages
@@ -42,12 +37,10 @@ public class Process<T>
     /// </summary>
     /// <param name="initialStage">The starting stage of the process</param>
     /// <param name="processData">The data associated with the process</param>
-    public Process(Stage initialStage, T processData)
+    public Process(T processData)
     {
         Id = Guid.NewGuid();
-        Stages = new List<Stage> { initialStage };
-        CurrentStage = initialStage;
-        History = new List<string> { $"Начало процесса: {CurrentStage.Name}" };
+        Stages = new List<Stage>();
         _transitions = new List<Transition<T>>();
         _processData = processData;
     }
@@ -64,6 +57,11 @@ public class Process<T>
         }
         else
         {
+            if (Stages.Count == 0)
+            {
+                CurrentStage = stage;
+            }
+            
             Stages.Add(stage);
             Console.WriteLine($"Этап '{stage.Name}' добавлен в процесс.");
         }
@@ -93,24 +91,11 @@ public class Process<T>
             transition.ExecuteHandler(_processData); // Вызов обработчика перехода с данными процесса
             CurrentStage = transition.ToStage;
             var message = $"\tПереход на этап: {CurrentStage.Name}\n\tПо событию: {eventInstance.GetType()}\n\tИнициатор: {eventInstance.Emitter}";
-            History.Add(message);
             Console.WriteLine(message);
         }
         else
         {
             Console.WriteLine($"Невозможно обработать событие: {eventInstance} на этапе: {CurrentStage.Name}");
-        }
-    }
-
-    /// <summary>
-    /// Prints the history of all transitions in the process
-    /// </summary>
-    public void PrintHistory()
-    {
-        Console.WriteLine("История переходов:");
-        foreach (var entry in History)
-        {
-            Console.WriteLine(entry);
         }
     }
 }

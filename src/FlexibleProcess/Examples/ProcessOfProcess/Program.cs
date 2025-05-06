@@ -9,12 +9,10 @@ class Program
 
         SystemInitiator system = new("SYS-001");
 
-        TurnOn turnOn = new(system);
-        TurnOff turnOff = new(system);
+        var shipping = new Process<Shipping>(new Shipping(42, "#4321"));
+        var shippingProcess = new Process<Process<Shipping>>(shipping);
 
-        var shipping = new Process<Shipping>(turnedOff, new Shipping(42, "#4321"));
-        var shippingProcess = new Process<Process<Shipping>>(turnedOff, shipping);
-
+        shippingProcess.AddStage(turnedOff);
         shippingProcess.AddStage(turnedOn);
 
         // Create transition guards and handlers
@@ -31,9 +29,9 @@ class Program
 
         Console.WriteLine("Starting process demonstration...\n");
 
-        shippingProcess.HandleEvent(turnOn);
-        shippingProcess.HandleEvent(turnOff);
-        shippingProcess.HandleEvent(turnOn);
-        shippingProcess.HandleEvent(turnOff);
+        shippingProcess.HandleEvent(new TurnOn(system));
+        shippingProcess.HandleEvent(new TurnOff(system));
+        shippingProcess.HandleEvent(new TurnOn(system));
+        shippingProcess.HandleEvent(new TurnOff(system));
     }
 }
