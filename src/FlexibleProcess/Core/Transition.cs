@@ -59,7 +59,7 @@ public class Transition<T>
     /// Executes the transition handler after validating the transition is possible
     /// </summary>
     /// <param name="processData">The data associated with the process</param>
-    public void ExecuteHandler(T processData)
+    public void ExecuteHandler<TEmitter>(Event<TEmitter> eventInstance, T processData)
     {
         if (!Guard.Validate(processData))
         {
@@ -67,7 +67,7 @@ public class Transition<T>
             return;
         }
 
-        Handler.Execute(FromStage, ToStage, processData); // Execute the transition handler
+        Handler.Execute(eventInstance, FromStage, ToStage, processData); // Execute the transition handler
     }
 
     /// <summary>

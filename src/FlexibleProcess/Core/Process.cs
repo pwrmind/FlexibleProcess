@@ -89,7 +89,7 @@ public class Process<T>
         if (transition != null)
         {
             // Можно добавить дополнительные обработчики до и после перехода
-            transition.ExecuteHandler(_processData); // Вызов обработчика перехода с данными процесса
+            transition.ExecuteHandler(eventInstance, _processData); // Вызов обработчика перехода с данными процесса
             CurrentStage = transition.ToStage;
             var message = $"\tПереход на этап: {CurrentStage.Name}\n\tПо событию: {eventInstance.GetType()}\n\tИнициатор: {eventInstance.Emitter}";
             Console.WriteLine(message);

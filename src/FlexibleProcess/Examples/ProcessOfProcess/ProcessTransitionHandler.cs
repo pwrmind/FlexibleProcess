@@ -2,9 +2,9 @@ namespace FlexibleProcess.Examples.ProcessOfProcess;
 
 public class ProcessTransitionHandler : TransitionHandler<Process<Shipping>>
 {
-    public override void Execute(Stage fromStage, Stage toStage, Process<Shipping> process)
+    public override void Execute<TEmitter>(Event<TEmitter> eventInstance, Stage fromStage, Stage toStage, Process<Shipping> process)
     {
-        Console.WriteLine($"Process #{process.Id} transition: {fromStage.Name} -> {toStage.Name}");
+        Console.WriteLine($"Process #{process.Id} transition {eventInstance.GetType()}: {fromStage.Name} -> {toStage.Name}");
 
         switch (toStage.Name)
         {

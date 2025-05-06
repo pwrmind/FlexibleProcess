@@ -13,7 +13,7 @@ public class TransitionHandler<T>
     /// <param name="fromStage">The source stage</param>
     /// <param name="toStage">The target stage</param>
     /// <param name="processData">The data associated with the process</param>
-    public virtual void Execute(Stage fromStage, Stage toStage, T processData)
+    public virtual void Execute<TEmitter>(Event<TEmitter> eventInstance, Stage fromStage, Stage toStage, T processData)
     {
         // Default implementation does nothing
         // Override this method in derived classes to add custom transition logic
